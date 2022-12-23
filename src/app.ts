@@ -2,8 +2,6 @@ import { Application } from '@curveball/core';
 
 import accessLog from '@curveball/accesslog';
 
-import { checkPatches } from './database';
-
 import halBrowser from '@curveball/browser';
 import problem from '@curveball/problem';
 import bodyParser from '@curveball/bodyparser';
@@ -11,29 +9,8 @@ import bodyParser from '@curveball/bodyparser';
 import routes from './routes';
 import links from '@curveball/links';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv-defaults').config();
-
-
-(async () => {
-
-  // eslint-disable-next-line no-console
-  console.log('Connecting to database');
-  await checkPatches();
-
-})().catch( (err) => {
-
-  // eslint-disable-next-line no-console
-  console.error('Could not start API');
-
-  // eslint-disable-next-line no-console
-  console.error(err);
-  process.exit(2);
-
-});
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const app = new Application();
 

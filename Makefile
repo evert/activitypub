@@ -1,5 +1,7 @@
 SOURCE_FILES:=$(shell find src/ -type f -name '*.ts')
 
+include .env
+
 .PHONY:all
 all: build
 
@@ -29,11 +31,20 @@ watch:
 start: build
 	node dist/index.js
 
+.PHONY: ngrok
+ngrok:
+	ngrok http ${PORT}
+
 dist/build: $(SOURCE_FILES)
 	node_modules/.bin/tsc
 	@# Creating a small file to keep track of the last build time
 	touch dist/build
 
+.env:
+	cp .env.sample .env
+
+
 .PHONY:clean
 clean:
 	rm -r dist
+
