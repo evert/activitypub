@@ -1,0 +1,17 @@
+# npm
+/node_modules
+
+# typescript output
+/dist
+
+# vim
+.*.swp
+
+# nyc
+/.nyc_output
+
+# macOS
+.DS_Store
+
+# dotenv
+.env
