@@ -60,7 +60,9 @@
     "@curveball/problem": "^0.4.0",
     "@curveball/router": "^0.5.0",
     "@curveball/validator": "^0.10.0",
+    "@extractus/feed-extractor": "^6.1.7",
     "dotenv": "^16.0.2",
+    "dotenv-expand": "^10.0.0",
     "mysql2": "^2.2.5"
   },
   "mocha": {

@@ -6,11 +6,33 @@ import halBrowser from '@curveball/browser';
 import problem from '@curveball/problem';
 import bodyParser from '@curveball/bodyparser';
 
-import routes from './routes';
+import activityPub from './activity-pub/mw';
+
 import links from '@curveball/links';
 
+import routes from './routes';
+
 import * as dotenv from 'dotenv';
-dotenv.config();
+import * as dotenvExpand from 'dotenv-expand';
+
+const myEnv = dotenv.config();
+dotenvExpand.expand(myEnv);
+
+const requireEnv = [
+  'PORT',
+  'USERNAME',
+  'DISPLAY_NAME',
+  'SUMMARY',
+  'WEBSITE',
+  'FEED_URL',
+];
+
+for(const re of requireEnv) {
+  if (!(re in process.env)) {
+    throw new Error('Missing environment variable: ' + re);
+  }
+}
+
 
 const app = new Application();
 
@@ -32,5 +54,8 @@ app.use(bodyParser());
 app.use(links());
 
 app.use(...routes);
+
+app.use(activityPub());
+
 
 export default app;
