@@ -35,14 +35,15 @@ start: build
 ngrok:
 	ngrok http ${PORT}
 
+ngrok-watch-server: export NGROK_ORIGIN := $(shell curl http://127.0.0.1:4040/api/tunnels -s | jq '.tunnels[0].public_url' -j --raw-output  -)
+ngrok-watch-server:
+	@[ "${NGROK_ORIGIN}" ] && /bin/true || ( echo "Could not get a NGROK public URL. Is it running? You might need to run 'make ngrok first'"; exit 1 )
+	CURVEBALL_ORIGIN="$(NGROK_ORIGIN)" npx tsc-watch --onSuccess 'node dist/index.js'
+
 dist/build: $(SOURCE_FILES)
 	node_modules/.bin/tsc
 	@# Creating a small file to keep track of the last build time
 	touch dist/build
-
-.env:
-	cp .env.sample .env
-
 
 .PHONY:clean
 clean:
